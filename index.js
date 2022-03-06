@@ -10,6 +10,8 @@ let roulette;
 startStop.addEventListener("click",function(){
     if(buttonStatus){
         buttonStatus = false;
+        stopSound.pause();
+        startSound.currentTime = 0.5;
         startSound.play();
         startSound.loop = true;
         roulette = setInterval(function(){
@@ -19,9 +21,10 @@ startStop.addEventListener("click",function(){
         },interval);
     }else{
         startSound.pause();
+        stopSound.currentTime = 0;
         stopSound.play();
         clearInterval(roulette);
-        resultDisplay.innerText = "大吉";
+        select();
         startStop.innerText = "開始";
         buttonStatus = true;
     }
@@ -46,5 +49,27 @@ function showDisplay(){
     if(resultNumber == 5){
         resultDisplay.innerText ="凶";
         resultNumber = -1;
+    }
+}
+
+function select(){
+    let lastResultNumber = Math.floor(Math.random()*100);
+    if(lastResultNumber >= 0 && lastResultNumber <= 59){
+        resultDisplay.innerText ="大吉";
+    }
+    if(lastResultNumber >= 60 && lastResultNumber <= 79){
+        resultDisplay.innerText ="吉";
+    }
+    if(lastResultNumber >= 80 && lastResultNumber <= 89){
+        resultDisplay.innerText ="中吉";
+    }
+    if(lastResultNumber >= 90 && lastResultNumber <= 94){
+        resultDisplay.innerText ="小吉";
+    }
+    if(lastResultNumber >= 95 && lastResultNumber <= 99){
+        resultDisplay.innerText ="末吉";
+    }
+    if(lastResultNumber == 100){
+        resultDisplay.innerText ="凶";
     }
 }
